@@ -1,3 +1,10 @@
+#Join our community called IA-Labs to converse about innovative projects!
+
+https://discord.gg/n7KAd8MCc2
+
+
+
+
 # 🔭⚔️ COUNCIL OF LORDS: NASA-NATIVE EXOPLANET DETECTION ENSEMBLE ⚔️🔭
 
 ## ✨ MANIFESTO ✨
