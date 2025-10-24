@@ -1,6 +1,3 @@
-#Join our community called IA-Labs to converse about innovative projects!
-
-https://discord.gg/n7KAd8MCc2
 
 
 
