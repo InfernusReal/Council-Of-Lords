@@ -180,7 +180,7 @@ class SmartEnsemblePredictor:
             compensated_confidence *= 0.6  # Moderate veto
             logger.debug(f"⚠️ Chaos Master moderate veto: {chaos:.3f}")
         
-        # BROWN DWARF / MASSIVE OBJECT DETECTION
+        # Brown-dwarf and high-mass object detection
         # If any individual vote is extremely high (>0.95) but Chaos is skeptical, be suspicious
         max_individual_vote = max(big_4_votes)
         if max_individual_vote > 0.95 and chaos < 0.9 and compensated_confidence > 0.8:

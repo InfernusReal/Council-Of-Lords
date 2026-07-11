@@ -41,7 +41,7 @@ print(f'🔥 BRUTAL REALITY PROCESSING:')
 print(f'   V-shape eclipse: {v_shape}')
 print(f'   Instrumental correlation: {instrumental}')
 
-# Get enhanced verdict with FULL BRUTAL REALITY TEST LOGIC
+# Apply the enhanced ensemble decision logic
 verdict, confidence, votes, predictions, signal_analysis = enhanced_council_predict(
     council_models, council_scalers, nasa_params, v_shape, instrumental
 )

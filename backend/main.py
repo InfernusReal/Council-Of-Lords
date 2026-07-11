@@ -93,7 +93,7 @@ class AnalysisResult(BaseModel):
     advanced_detection: Dict[str, Any] = {}
     nasa_parameters: List[float] = []
     signal_analysis: Dict[str, Any] = {}
-    # 🌟 STELLAR CATALOG INTEGRATION - NEW FIELDS! 🌟
+    # Stellar catalog fields
     stellar_mass: float = 1.0           # Solar masses (from catalog)
     stellar_radius: float = 1.0         # Solar radii (from catalog) 
     stellar_temperature: float = 5778   # Kelvin (from catalog)
@@ -324,7 +324,7 @@ async def analyze(file: UploadFile = File(...)):
             print(f"🔍 DEBUG nasa_params before Council: shape={np.array(nasa_params).shape}, length={len(nasa_params)}")
             print(f"🔍 DEBUG nasa_params content: {nasa_params}")
             
-            # Get enhanced verdict with FULL BRUTAL REALITY TEST LOGIC
+            # Apply the enhanced ensemble decision logic
             verdict, confidence, votes, predictions, signal_analysis = enhanced_council_predict(
                 council_models, council_scalers, nasa_params, v_shape, instrumental, 
                 gas_giant_detected, gas_giant_confidence, gas_giant_type
@@ -335,7 +335,7 @@ async def analyze(file: UploadFile = File(...)):
         verdict, confidence, votes, predictions, signal_analysis = result
         all_logs.extend(council_logs)
         
-        # Build BRUTAL REALITY TEST red flags
+        # Build false-positive and data-quality flags
         red_flags = []
         if v_shape:
             red_flags.append("🔺 V-shape eclipse detected (Binary signature)")
@@ -381,7 +381,7 @@ async def analyze(file: UploadFile = File(...)):
             "processing_pipeline": "LEGENDARY_COUNCIL_87_PERCENT_SURVIVAL"
         }
         
-        # 🌟 EXTRACT STELLAR PARAMETERS FROM CONVERTER! 🌟
+        # Extract stellar parameters from the converter
         stellar_params = getattr(supreme_converter, 'last_stellar_params', {
             'stellar_mass': 1.0,
             'stellar_radius': 1.0, 
@@ -391,7 +391,7 @@ async def analyze(file: UploadFile = File(...)):
             'source': 'unknown'
         })
         
-        # 🔥 DEBUG: PRINT WHAT WE'RE ACTUALLY SENDING! 🔥
+        # Log the stellar parameters returned to the frontend
         print(f"🌟 STELLAR CATALOG DEBUG:")
         print(f"   Raw stellar_params from converter: {stellar_params}")
         print(f"   stellar_mass: {stellar_params.get('stellar_mass', 1.0)}")
@@ -466,7 +466,7 @@ async def analyze(file: UploadFile = File(...)):
             advanced_detection=advanced_detection,
             nasa_parameters=nasa_params,
             signal_analysis=signal_analysis,
-            # 🌟 STELLAR CATALOG DATA! 🌟
+            # Stellar catalog data
             stellar_mass=stellar_mass_send,
             stellar_radius=stellar_radius_send,
             stellar_temperature=stellar_temp_send,
@@ -555,7 +555,7 @@ async def websocket_endpoint(websocket: WebSocket):
         print(f"🔌 WebSocket connection closed. Remaining connections: {len(websocket_connections)}")
 
 # =============================================
-# 🚀 STARTUP CODE
+# Application entry point
 # =============================================
 
 if __name__ == "__main__":

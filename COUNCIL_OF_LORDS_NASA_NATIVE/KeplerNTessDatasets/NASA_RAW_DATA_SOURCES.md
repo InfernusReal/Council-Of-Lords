@@ -1,87 +1,86 @@
-🚀 100% RAW NASA TELESCOPE DATA - MANUAL DOWNLOAD GUIDE 🚀
-================================================================
+# NASA light-curve data sources
 
-🔥 OFFICIAL NASA DATA SOURCES FOR RAW LIGHTCURVES:
+This guide lists authoritative sources and a Python workflow for acquiring Kepler, K2, and TESS light curves. Archive interfaces and package APIs can change; consult the linked service documentation when a command or URL is no longer current.
 
-1. 🌟 KEPLER ARCHIVE (MAST)
-   URL: https://archive.stsci.edu/kepler/
-   
-   STEP-BY-STEP:
-   • Go to: https://archive.stsci.edu/kepler/data_search/search.php
-   • Enter a Kepler ID (KIC): 8311864 (Kepler-452b)
-   • Select "Lightcurve" data type
-   • Choose quarters (Q1-Q17)
-   • Download FITS files
-   
-   FAMOUS TARGETS TO TRY:
-   • KIC 8311864 = Kepler-452b (Earth's cousin)
-   • KIC 10593626 = Kepler-22b (first habitable zone planet)
-   • KIC 8120608 = Kepler-186f (Earth-sized)
-   • KIC 9632895 = Kepler-442b (super-Earth)
+## Mikulski Archive for Space Telescopes
 
-2. 🛰️ TESS ARCHIVE (MAST)
-   URL: https://heasarc.gsfc.nasa.gov/docs/tess/data-access.html
-   
-   STEP-BY-STEP:
-   • Go to: https://mast.stsci.edu/portal/Mashup/Clients/Mast/Portal.html
-   • Search for "TESS" missions
-   • Enter TIC ID: 271971130 (TOI-715)
-   • Download lightcurve FITS files
-   
-   FAMOUS TESS TARGETS:
-   • TIC 271971130 = TOI-715b (super-Earth)
-   • TIC 150428135 = TOI-700d (Earth-sized in habitable zone)
-   • TIC 279741377 = TOI-849b (unusual planet)
+The [Mikulski Archive for Space Telescopes](https://archive.stsci.edu/) distributes Kepler, K2, and TESS products.
 
-3. 🌍 EXOPLANET ARCHIVE (IPAC)
-   URL: https://exoplanetarchive.ipac.caltech.edu/
-   
-   STEP-BY-STEP:
-   • Go to "Data" → "Time Series"
-   • Select Kepler or TESS
-   • Choose confirmed exoplanet systems
-   • Download lightcurve data
+- [Kepler mission archive](https://archive.stsci.edu/kepler/)
+- [MAST Portal](https://mast.stsci.edu/portal/Mashup/Clients/Mast/Portal.html)
+- [TESS data access guidance](https://heasarc.gsfc.nasa.gov/docs/tess/data-access.html)
 
-4. 📊 LIGHTKURVE (Python Package)
-   
-   INSTALL: pip install lightkurve
-   
-   PYTHON CODE:
-   ```python
-   import lightkurve as lk
-   
-   # Download Kepler data
-   search = lk.search_lightcurve('Kepler-452b', mission='Kepler')
-   lc = search.download_all().stitch()
-   
-   # Save as CSV
-   lc.to_pandas().to_csv('kepler_452b_raw.csv')
-   
-   # Download TESS data
-   search = lk.search_lightcurve('TOI-715', mission='TESS')
-   lc = search.download_all().stitch()
-   lc.to_pandas().to_csv('toi_715_raw.csv')
-   ```
+Search by a mission-specific identifier such as a Kepler Input Catalog identifier or TESS Input Catalog identifier. Select the required light-curve product, cadence, sector or quarter, and processing level. Preserve the downloaded FITS headers and quality flags.
 
-5. 🔬 NASA EXOPLANET ARCHIVE API
-   
-   DIRECT URLs:
-   • Kepler: https://exoplanetarchive.ipac.caltech.edu/data/KeplerTimeSeries/
-   • K2: https://exoplanetarchive.ipac.caltech.edu/data/K2TimeSeries/
-   • TESS: https://exoplanetarchive.ipac.caltech.edu/data/TESS/
+Example identifiers used by this repository include:
 
-🎯 WHAT YOU'LL GET:
-• FITS files with time, flux, and quality flags
-• Real instrumental noise and systematics
-• Real stellar variability
-• Real data gaps and artifacts
-• 100% authentic NASA telescope measurements
+| Mission | Target | Identifier |
+| --- | --- | --- |
+| Kepler | Kepler-452 | KIC 8311864 |
+| Kepler | Kepler-22 | KIC 10593626 |
+| Kepler | Kepler-186 | KIC 8120608 |
+| Kepler | Kepler-442 | KIC 9632895 |
+| TESS | TOI-715 | TIC 271971130 |
+| TESS | TOI-700 | TIC 150428135 |
+| TESS | TOI-849 | TIC 279741377 |
 
-🔥 BEST TARGETS FOR TESTING:
-• Kepler-452b (confirmed Earth-like exoplanet)
-• TOI-715b (recent TESS super-Earth discovery)
-• Kepler-22b (first confirmed habitable zone planet)
+Verify identifiers against the current archive before downloading data.
 
-💡 PRO TIP: Use lightkurve package - it's the official NASA tool!
+## NASA Exoplanet Archive
 
-🚀 FEED THIS TO THE COUNCIL OF LORDS FOR ULTIMATE TESTING!
+The [NASA Exoplanet Archive](https://exoplanetarchive.ipac.caltech.edu/) provides confirmed-planet catalogs and time-series access. Use its current documentation and table definitions when joining catalog parameters to light curves.
+
+Relevant collections include:
+
+- [Kepler time series](https://exoplanetarchive.ipac.caltech.edu/data/KeplerTimeSeries/)
+- [K2 time series](https://exoplanetarchive.ipac.caltech.edu/data/K2TimeSeries/)
+- [TESS time series](https://exoplanetarchive.ipac.caltech.edu/data/TESS/)
+
+Catalog confirmation status and parameters may be revised. Record the table name, query, and retrieval date.
+
+## Lightkurve
+
+[Lightkurve](https://lightkurve.github.io/lightkurve/) provides a Python interface for searching and processing Kepler and TESS light curves.
+
+Install it in an isolated environment:
+
+```bash
+python -m pip install lightkurve
+```
+
+Example:
+
+```python
+import lightkurve as lk
+
+search = lk.search_lightcurve('Kepler-452', mission='Kepler')
+collection = search.download_all()
+light_curve = collection.stitch()
+light_curve.to_pandas().to_csv('kepler_452_lightcurve.csv', index=False)
+
+search = lk.search_lightcurve('TOI-715', mission='TESS')
+collection = search.download_all()
+light_curve = collection.stitch()
+light_curve.to_pandas().to_csv('toi_715_lightcurve.csv', index=False)
+```
+
+Stitching, normalization, flattening, outlier removal, and quality-mask choices alter the data. Record every operation and retain the original FITS products.
+
+## Provenance checklist
+
+For each dataset, record:
+
+- mission, target name, and archive identifier;
+- archive and product URI;
+- sector, quarter, campaign, cadence, and pipeline version;
+- retrieval date;
+- quality mask and excluded cadences;
+- normalization, detrending, stitching, and resampling steps;
+- output column names and units;
+- script and dependency versions.
+
+Do not describe generated or transformed CSV data as raw observations. Raw archive products and derived tables should be stored and labeled separately.
+
+## Expected content
+
+Mission light-curve products generally include time, flux measurements, uncertainty estimates, and quality information. They can contain gaps, instrumental systematics, contamination, and stellar variability. These effects must be considered during candidate analysis and false-positive vetting.

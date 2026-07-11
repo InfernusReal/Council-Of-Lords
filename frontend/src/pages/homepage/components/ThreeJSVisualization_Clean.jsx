@@ -16,7 +16,7 @@ const ThreeJSVisualization = ({
   useEffect(() => {
     if (!mountRef.current) return;
 
-    // 🌌 SCENE SETUP 🌌
+    // Scene setup
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x000011);
 
@@ -70,7 +70,7 @@ const ThreeJSVisualization = ({
       starMesh.castShadow = false;
       starGroup.add(starMesh);
 
-      // 🌟 STELLAR PARTICLES 🌟
+      // Stellar particle effect
       const particleCount = 1000;
       const particleGeometry = new THREE.BufferGeometry();
       const particlePositions = new Float32Array(particleCount * 3);
@@ -113,7 +113,7 @@ const ThreeJSVisualization = ({
     const createPlanet = () => {
       const planetGroup = new THREE.Group();
       
-      // 🔥 PLANET SCALE MULTIPLIER - GUARANTEED VISIBILITY! 🔥
+      // Scale the planet for visibility
       const PLANET_SCALE = 10.0;
       const planetRadius = Math.max(planetRadiusEarth * PLANET_SCALE, 2.0);
       const planetGeometry = new THREE.SphereGeometry(planetRadius, 32, 16);
@@ -148,7 +148,7 @@ const ThreeJSVisualization = ({
       return { planetGroup, planetMesh };
     };
 
-    // 🎯 GIANT RED ARROW POINTER! 🎯
+    // Create the planet pointer
     const createPlanetPointer = (planetGroup) => {
       const arrowGroup = new THREE.Group();
       
@@ -179,7 +179,7 @@ const ThreeJSVisualization = ({
       return arrowGroup;
     };
 
-    // 🌌 ORBITAL PATH 🌌
+    // Orbital path
     const createOrbitPath = () => {
       const orbitRadius = habitability.semiMajorAxisAU * 3;
       const orbitGeometry = new THREE.RingGeometry(orbitRadius - 0.1, orbitRadius + 0.1, 128);

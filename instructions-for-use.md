@@ -1,99 +1,92 @@
-# Instructions for Use
+# Instructions for use
 
-## Overview
-This project contains an exoplanet detection system with both backend and frontend components, along with comprehensive datasets for training and testing.
+Council of Lords consists of a Python backend, a React frontend, trained model artifacts, and datasets. Read the main [README](./README.md) for architecture, limitations, and responsible-use guidance before interpreting results.
 
-🌟 If you're here from NASA judging: Please begin by reading the [README.md](../README.md) file first. It contains the manifesto, feature breakdown, and scientific vision of this system. This is not a demo — this is real exoplanet detection built from scratch using 5 AI models and pure physics intelligence.
+## 1. Prepare the backend environment
 
+The current `backend/requirements.txt` contains duplicated and conflicting pins. Review that file and establish a compatible Python environment before installation. The backend and model scripts import packages including FastAPI, Uvicorn, pandas, NumPy, TensorFlow, scikit-learn, joblib, and multipart support.
 
-## 📡 Real Kepler and TESS Datasets
+From the repository root:
 
-**Note**: If you want to use real Kepler and TESS datasets, kindly go to the `KeplerNTessDatasets` folder inside the `COUNCIL_OF_LORDS_NASA_NATIVE` folder where you'll find **36 authentic Kepler and TESS datasets** from confirmed exoplanet observations. You'll find them at the top.
+```bash
+cd backend
+python main.py
+```
 
-**Location**: `COUNCIL_OF_LORDS_NASA_NATIVE/kepplerntess/`  
-**Contents**: Real telescope data from NASA missions including Kepler-442, TOI-715, and other confirmed exoplanets
+The API uses port `8000` by default. Confirm that the models loaded successfully:
 
-## Backend Setup and Execution
+```bash
+curl http://localhost:8000/health
+```
 
-### Running the Backend Server
-1. Navigate to the backend directory:
-   ```bash
-   cd backend
-   ```
+Do not submit files until the response reports `READY`.
 
-2. Install required dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+## 2. Start the frontend
 
-3. Start the backend server:
-   ```bash
-   python main.py
-   ```
+In another terminal:
 
-The backend server will start and be ready to process exoplanet detection requests.
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-## Frontend Setup and Execution
+Open `http://localhost:5173`. The development server proxies requests under `/api` to the backend.
 
-### Running the Frontend
-1. Navigate to the frontend directory:
-   ```bash
-   cd frontend
-   ```
+## 3. Select input data
 
-2. Install dependencies (if not already installed):
-   ```bash
-   npm install
-   ```
+The backend's CSV path selects the first two numeric columns as time and flux. Confirm the column order, units, missing-value handling, and normalization expected by the converter before analysis.
 
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
+Sources in this repository include:
 
-The frontend will be available in your web browser at the provided local development URL.
+- `COUNCIL_OF_LORDS_NASA_NATIVE/KeplerNTessDatasets` for Kepler- and TESS-related CSV files;
+- `COUNCIL_OF_LORDS_NASA_NATIVE/real_telescope_data` for example telescope-style inputs;
+- `clean_ultimate_test` for baseline fixtures;
+- `brutal_reality_test` and related directories for difficult and false-positive fixtures.
 
-## Datasets
+Folder names describe intended tests, not independently verified provenance. Check source records before citing a dataset as mission data.
 
-The project includes several datasets for training and testing:
+## 4. Run an analysis
 
-### Primary Training Dataset
-- **COUNCIL_OF_LORDS_NASA_NATIVE/**: Contains NASA-native datasets and trained models
-  - Multiple trained models with .h5 and .pkl files
-  - Training scripts for various detectors (Atmospheric Warrior, Backyard Genius, Celestial Oracle, etc.)
-  - Real telescope data and catalog generators
+Use the frontend upload control, or call the API directly:
 
-### Testing Datasets
+```bash
+curl -X POST http://localhost:8000/analyze \
+  -F "file=@path/to/lightcurve.csv"
+```
 
-#### Comprehensive Testing
-- **brutal_reality_test/**: Contains challenging real-world test cases
-  - `ground_hell.csv`
-  - `heartbreak_binary.csv`
-  - `instrumental_demon.csv`
-  - `kepler_disaster.csv`
-  - `stellar_demon.csv`
-  - `tess_nightmare.csv`
-  - `tiny_earth_analog.csv`
-  - `ultra_contact_binary.csv`
+Review the returned verdict together with individual votes, red flags, extracted parameters, signal diagnostics, catalog source, and pipeline output.
 
-#### Clean Testing
-- **clean_ultimate_test/**: Contains cleaner test datasets
-  - `bad_false_positive.csv`
-  - `contact_binary.csv`
-  - `giant_fp.csv`
-  - `good_exoplanet.csv`
-  - `hot_jupiter.csv`
+## 5. Interpret the result
 
-## Usage Workflow
+An `EXOPLANET` verdict is a model classification, not a confirmed discovery. Confidence values are generated by this ensemble and should not be assumed to be calibrated probabilities.
 
-1. **Start the Backend**: Follow the backend setup instructions to get your detection models running
-2. **Launch the Frontend**: Start the web interface for user interactions
-3. **Load Test Data**: Use the datasets from the specified folders to test detection accuracy
-4. **Analyze Results**: Compare performance across different dataset categories (brutal reality vs clean tests)
+Before drawing a scientific conclusion:
 
-## Notes
+1. Inspect the original light curve and quality flags.
+2. Verify the target identifier and archive provenance.
+3. Evaluate eclipsing binaries, blends, stellar variability, and instrumental systematics.
+4. Compare the inferred period and transit depth with established analysis tools.
+5. Seek independent observations and expert review.
 
-- The `COUNCIL_OF_LORDS_NASA_NATIVE` folder contains the most comprehensive and up-to-date models
-- Use `brutal_reality_test` datasets to stress-test your detection algorithms
-- Use `clean_ultimate_test` datasets for baseline performance verification
-- Ensure both backend and frontend are running simultaneously for full functionality
+## 6. Stop the application
+
+Stop the frontend and backend processes with `Ctrl+C`. Confirm that temporary files and long-running training processes have terminated before closing the environment.
+
+## Troubleshooting
+
+### Backend reports `NOT_READY`
+
+Review startup output for missing model files, incompatible TensorFlow artifacts, import errors, or dependency conflicts.
+
+### Frontend cannot reach the API
+
+Confirm that the backend is listening on port `8000`, the frontend is running through Vite, and no local firewall or proxy is blocking the request.
+
+### File cannot be parsed
+
+Use a CSV with at least two numeric columns and inspect the parser in `backend/main.py`. Convert FITS products explicitly rather than renaming them.
+
+### Results differ between environments
+
+Record dependency versions, model artifacts, random seeds, and preprocessing settings. TensorFlow and NumPy version differences can affect loading and numerical behavior.

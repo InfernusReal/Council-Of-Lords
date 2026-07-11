@@ -17,7 +17,7 @@ const ThreeJSVisualization = ({
   useEffect(() => {
     if (!mountRef.current) return;
 
-    // 🌟 SCENE SETUP - THE COSMIC STAGE! 🌟
+    // Scene setup
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x000000); // Pure black space
     sceneRef.current = scene;
@@ -74,7 +74,7 @@ const ThreeJSVisualization = ({
       starMesh.castShadow = false; // Stars don't cast shadows, they ARE the light
       starGroup.add(starMesh);
 
-      // ✨ CORONA EFFECT - STELLAR ATMOSPHERE! ✨
+      // Stellar corona effect
       const coronaGeometry = new THREE.SphereGeometry(starRadius * 1.5, 32, 16);
       const coronaMaterial = new THREE.ShaderMaterial({
         vertexShader: `
@@ -110,7 +110,7 @@ const ThreeJSVisualization = ({
       const coronaMesh = new THREE.Mesh(coronaGeometry, coronaMaterial);
       starGroup.add(coronaMesh);
 
-      // 🌟 STELLAR PARTICLES - SOLAR WIND! 🌟
+      // Stellar particle effect
       const particleCount = 1000;
       const particleGeometry = new THREE.BufferGeometry();
       const particlePositions = new Float32Array(particleCount * 3);
@@ -154,7 +154,7 @@ const ThreeJSVisualization = ({
     const createPlanet = () => {
       const planetGroup = new THREE.Group();
       
-      // 🔥 PLANET SCALE MULTIPLIER - GUARANTEED VISIBILITY! �
+      // Scale the planet for visibility
       const PLANET_SCALE = 8.0; // MASSIVE SCALE BOOST!
       const planetRadius = Math.max(planetRadiusEarth * PLANET_SCALE, 2.0); // NEVER smaller than 2 units!
       const planetGeometry = new THREE.SphereGeometry(planetRadius, 32, 16);
@@ -170,7 +170,7 @@ const ThreeJSVisualization = ({
           specular: 0x111111,
         });
       } else if (habitability.equilibriumTemp > 373) {
-        // Hot, Venus-like - GLOWING HOT! 🔥
+        // Hot, Venus-like appearance
         planetTexture = new THREE.MeshPhongMaterial({
           color: 0xff4500,
           emissive: 0x442200, // Bright orange glow!
@@ -207,7 +207,7 @@ const ThreeJSVisualization = ({
       return { planetGroup, planetMesh };
     };
 
-    // 🎯 HABITABLE ZONE VISUALIZATION! 🎯
+    // Habitable-zone visualization
     const createHabitableZone = () => {
       const hzGroup = new THREE.Group();
       
@@ -246,7 +246,7 @@ const ThreeJSVisualization = ({
       return hzGroup;
     };
 
-    // 🌌 ORBITAL PATH VISUALIZATION! 🌌
+    // Orbital-path visualization
     const createOrbitPath = () => {
       const orbitRadius = habitability.semiMajorAxisAU * 3; // Closer orbit for visibility!
       const orbitGeometry = new THREE.RingGeometry(orbitRadius - 0.05, orbitRadius + 0.05, 128);
@@ -292,7 +292,7 @@ const ThreeJSVisualization = ({
     const orbitRadius = habitability.semiMajorAxisAU * 3; // Same as orbit path!
     planetGroup.position.set(orbitRadius, 0, 0);
 
-    // 🎯 CREATE THE PLANET POINTER! 🎯
+    // Create the planet pointer
     // Add everything to scene
     scene.add(starGroup);
     scene.add(planetGroup);
@@ -362,7 +362,7 @@ const ThreeJSVisualization = ({
 
     window.addEventListener('resize', handleResize);
 
-    // ✅ CLEANUP FUNCTION - USEEFFECT RETURN
+    // Release Three.js resources when the effect is disposed
     return () => {
       window.removeEventListener('resize', handleResize);
       

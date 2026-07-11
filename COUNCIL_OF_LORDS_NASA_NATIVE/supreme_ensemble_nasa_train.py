@@ -39,7 +39,7 @@ def supreme_ensemble_nasa_loss(y_true, y_pred):
     # Base binary crossentropy
     bce = tf.keras.losses.binary_crossentropy(y_true, y_pred)
     
-    # SUPREME PENALTIES
+    # Classification penalties
     # CRITICAL penalty for missing confirmed exoplanets
     fn_penalty = tf.where(tf.equal(y_true, 1), 
                          tf.square(1 - y_pred) * 5.5,  # Supreme FN penalty
@@ -50,7 +50,7 @@ def supreme_ensemble_nasa_loss(y_true, y_pred):
                          tf.square(y_pred) * 2.8,  # Balanced FP penalty
                          tf.zeros_like(y_pred))
     
-    # SUPREME CONFIDENCE requirement
+    # Confidence requirement
     confidence = tf.abs(y_pred - 0.5) * 2.0
     uncertainty_penalty = tf.reduce_mean(tf.square(1 - confidence)) * 0.35
     
@@ -100,7 +100,7 @@ def create_supreme_ensemble_nasa_architecture():
     # Input for 5 specialist predictions + 8 NASA features = 13 total
     input_layer = Input(shape=(13,), name='supreme_nasa_input')
     
-    # SUPREME META-ANALYSIS LAYERS
+    # Meta-analysis layers
     x = Dense(128, activation='relu', kernel_regularizer=l2(0.0003), name='supreme_meta_1')(input_layer)
     x = BatchNormalization(name='supreme_norm_1')(x)
     x = Dropout(0.2, name='supreme_dropout_1')(x)
@@ -114,12 +114,12 @@ def create_supreme_ensemble_nasa_architecture():
     x = BatchNormalization(name='supreme_norm_3')(x)
     x = Dropout(0.15, name='harmony_dropout_2')(x)
     
-    # SUPREME CALIBRATION LAYERS
+    # Calibration layers
     x = Dense(16, activation='relu', kernel_regularizer=l2(0.0003), name='supreme_calibration')(x)
     x = BatchNormalization(name='supreme_norm_4')(x)
     x = Dropout(0.12, name='calibration_dropout')(x)
     
-    # FINAL SUPREME VERDICT
+    # Final output layer
     output = Dense(1, activation='sigmoid', name='supreme_ensemble_verdict')(x)
     
     model = Model(inputs=input_layer, outputs=output, name='SUPREME_CALIBRATED_ENSEMBLE_NASA_AI')
@@ -227,7 +227,7 @@ def train_supreme_ensemble_nasa():
         class_weight={0: 1.0, 1: 1.25}  # Supreme bias toward detection
     )
     
-    # SUPREME EVALUATION
+    # Evaluation
     print("\\n👑📊 SUPREME ENSEMBLE NASA PERFORMANCE:")
     
     val_loss, val_metric, val_acc, val_prec, val_rec = model.evaluate(X_val_scaled, y_val, verbose=0)

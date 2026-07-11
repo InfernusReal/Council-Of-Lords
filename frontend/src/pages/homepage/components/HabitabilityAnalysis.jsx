@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 
-// 🌟 STELLAR CATALOG BADGE SYSTEM - ORIGINAL COUNCIL OF LORDS 🌟
+// Stellar catalog badge definitions
 const getCatalogBadge = (source) => {
   const badges = {
     'TIC': { color: 'bg-purple-100 text-purple-800', text: '🛰️ TIC', title: 'TESS Input Catalog' },
@@ -55,18 +55,18 @@ const HabitabilityAnalysis = ({ results }) => {
   useEffect(() => {
     if (!results) return;
 
-    // 🌟 EXTRACT DATA EXACTLY AS BACKEND SENDS IT WITH SAFETY CHECKS 🌟
-    console.log('🔍 Full backend response:', results);
-    console.log('🔍 Backend response keys:', Object.keys(results));
+    // Extract backend fields with fallbacks
+    console.log('Full backend response:', results);
+    console.log('Backend response keys:', Object.keys(results));
     
     // DEBUG: Print ALL KEYS AND VALUES
-    console.log('🚨 ALL KEYS AND VALUES IN RESPONSE:');
+    console.log('Backend response fields:');
     Object.keys(results).forEach((key, index) => {
       console.log(`   ${index + 1}. ${key}: ${results[key]} (type: ${typeof results[key]})`);
     });
     
     // DEBUG: Print the EXACT STRUCTURE
-    console.log('🚨 DEBUGGING OBJECT STRUCTURE:');
+    console.log('Backend response structure:');
     console.log('   results.stellar_mass exists?', 'stellar_mass' in results);
     console.log('   results.stellar_temperature exists?', 'stellar_temperature' in results);
     console.log('   results.catalog_source exists?', 'catalog_source' in results);
@@ -74,12 +74,12 @@ const HabitabilityAnalysis = ({ results }) => {
     // Print ALL KEYS that start with 'stellar' or 'catalog'
     Object.keys(results).forEach(key => {
       if (key.includes('stellar') || key.includes('catalog')) {
-        console.log(`   FOUND STELLAR/CATALOG KEY: ${key} = ${results[key]}`);
+        console.log(`Stellar or catalog field: ${key} = ${results[key]}`);
       }
     });
     
     // Check specifically for stellar data
-    console.log('🌟 STELLAR DATA RECEIVED:');
+    console.log('Stellar data received');
     console.log('   stellar_mass:', results.stellar_mass, typeof results.stellar_mass);
     console.log('   stellar_radius:', results.stellar_radius, typeof results.stellar_radius);  
     console.log('   stellar_temperature:', results.stellar_temperature, typeof results.stellar_temperature);
@@ -99,7 +99,7 @@ const HabitabilityAnalysis = ({ results }) => {
     const planetPeriod = results.koi_period ?? 365;            // Days (nasa_params[0])
     const planetRadius = results.koi_prad ?? 1.0;              // Earth radii (nasa_params[1])
 
-    console.log('🌟 STELLAR CATALOG DATA FROM BACKEND:');
+    console.log('Stellar catalog data received from backend');
     console.log(`   Source: ${stellarSource}`);
     console.log(`   Mass: ${stellarMass} M☉`);
     console.log(`   Radius: ${stellarRadius} R☉`);
@@ -107,7 +107,7 @@ const HabitabilityAnalysis = ({ results }) => {
     console.log(`   Luminosity: ${stellarLuminosity} L☉`);
     console.log(`   Distance: ${stellarDistance} pc`);
     
-    console.log('🪐 PLANET DATA FROM BACKEND:');
+    console.log('Planet data received from backend:');
     console.log(`   Period: ${planetPeriod} days`);
     console.log(`   Radius: ${planetRadius} R⊕`);
 
@@ -117,7 +117,7 @@ const HabitabilityAnalysis = ({ results }) => {
     const gasGiantType = results.signal_analysis?.gas_giant_type ?? '';
     const gasGiantJupiterRadii = results.signal_analysis?.gas_giant_jupiter_radii ?? 0.0;
 
-    // 🌟 PHYSICS CALCULATIONS USING REAL STELLAR CATALOG DATA 🌟
+    // Calculate derived values from the supplied stellar parameters
     
     // Ensure all values are valid numbers before calculations
     const safeNum = (value, fallback) => {
@@ -239,7 +239,7 @@ const HabitabilityAnalysis = ({ results }) => {
 
   }, [results]);
 
-  // 🚀 2D VISUALIZATION ANIMATION ENGINE! 🚀
+  // Update the two-dimensional visualization animation
   useEffect(() => {
     if (!calculations || !canvasRef.current) return;
 
@@ -372,7 +372,7 @@ const HabitabilityAnalysis = ({ results }) => {
       
       // Debug logging (remove later)
       if (animationTime % 60 === 0) {
-        console.log(`🌍 Planet position: (${Math.round(planetX)}, ${Math.round(planetY)}), Angle: ${Math.round(angle * 180 / Math.PI)}°`);
+        console.log(`Planet position: (${Math.round(planetX)}, ${Math.round(planetY)}), angle: ${Math.round(angle * 180 / Math.PI)}°`);
       }
       
       animationRef.current = requestAnimationFrame(animate);

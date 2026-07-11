@@ -43,7 +43,7 @@ const CameraExoplanetDetector = () => {
     try {
       setCameraStatus('requesting');
       setPipelineStep(1);
-      console.log('🔄 Requesting camera access...');
+      console.log('Requesting camera access');
       
       const constraints = {
         video: {
@@ -54,7 +54,7 @@ const CameraExoplanetDetector = () => {
       };
 
       const stream = await navigator.mediaDevices.getUserMedia(constraints);
-      console.log('✅ Camera stream obtained!');
+      console.log('Camera stream obtained');
       
       // Store stream immediately
       streamRef.current = stream;
@@ -62,25 +62,25 @@ const CameraExoplanetDetector = () => {
       // Wait a bit for React to render the video element
       setTimeout(() => {
         if (videoRef.current) {
-          console.log('📹 Setting video source...');
+          console.log('Setting video source');
           videoRef.current.srcObject = stream;
           
           // Wait for video to be ready
           videoRef.current.onloadedmetadata = () => {
-            console.log('📹 Video metadata loaded!');
+            console.log('Video metadata loaded');
             setCameraStatus('connected');
             setPipelineStep(2);
           };
           
           // Force set after timeout
           setTimeout(() => {
-            console.log('⚡ Force setting camera as connected');
+            console.log('Setting camera state to connected');
             setCameraStatus('connected');
             setPipelineStep(2);
           }, 1000);
           
         } else {
-          console.error('❌ Video ref STILL not available after timeout');
+          console.error('Video reference is unavailable after timeout');
           // Force it anyway
           setCameraStatus('connected');
           setPipelineStep(2);
@@ -88,7 +88,7 @@ const CameraExoplanetDetector = () => {
       }, 100);
         
     } catch (error) {
-      console.error('❌ Camera access failed:', error);
+      console.error('Camera access failed:', error);
       setCameraStatus('error');
       setPipelineStep(0);
     }
@@ -96,7 +96,7 @@ const CameraExoplanetDetector = () => {
 
   // STEP 2: START AI COUNCIL ANALYSIS
   const startAnalysis = () => {
-    console.log('🚀 startAnalysis called - setting isAnalyzing to true');
+    console.log('Starting analysis');
     
     // Clear any existing interval first
     if (analysisInterval.current) {
@@ -116,7 +116,7 @@ const CameraExoplanetDetector = () => {
       exoplanetsDetected: 0
     });
     
-    console.log('🚀 STARTING AI COUNCIL ANALYSIS...');
+    console.log('Running ensemble analysis');
     
     // Wait for state update before starting interval
     setTimeout(() => {
@@ -128,16 +128,16 @@ const CameraExoplanetDetector = () => {
 
   // STEP 3: AI COUNCIL EXTRACTION & FILTERING
   const performAICouncilExtraction = async () => {
-    console.log('🔍 performAICouncilExtraction called, isAnalyzing:', isAnalyzing, 'shouldBeAnalyzing:', shouldBeAnalyzing.current);
+    console.log('Extraction state:', isAnalyzing, 'expected state:', shouldBeAnalyzing.current);
     
     // Check if analysis is active (use ref as backup)
     if (!isAnalyzing && !shouldBeAnalyzing.current) {
-      console.log('⏹️ Analysis not active, returning');
+      console.log('Analysis is inactive; skipping extraction');
       return;
     }
     
     if (!videoRef.current || !canvasRef.current) {
-      console.log('📹 Video or canvas ref not available');
+      console.log('Video or canvas reference is unavailable');
       return;
     }
 
@@ -146,7 +146,7 @@ const CameraExoplanetDetector = () => {
     
     // Check if video is ready
     if (video.videoWidth === 0 || video.videoHeight === 0) {
-      console.log('⏳ Video not ready...');
+      console.log('Video is not ready');
       return;
     }
 
@@ -157,7 +157,7 @@ const CameraExoplanetDetector = () => {
     // Draw current frame
     ctx.drawImage(video, 0, 0);
     
-    console.log('🏛️ AI COUNCIL ANALYZING FRAME...');
+    console.log('Analyzing video frame');
     setPipelineStep(4);
     
     // Get image data for analysis
@@ -165,11 +165,11 @@ const CameraExoplanetDetector = () => {
     const candidates = extractStarCandidates(imageData);
     
     if (candidates.length > 0) {
-      console.log(`✨ AI COUNCIL FOUND ${candidates.length} CANDIDATES!`);
+      console.log(`Ensemble analysis found ${candidates.length} candidates`);
       
       // Check if analysis is still active before processing candidates
       if (!isAnalyzing && !shouldBeAnalyzing.current) {
-        console.log('🛑 ANALYSIS STOPPED - Skipping candidate processing');
+        console.log('Analysis stopped; skipping candidate processing');
         return;
       }
       
@@ -252,7 +252,7 @@ const CameraExoplanetDetector = () => {
     return brightCount >= 4; // At least 4 bright pixels = valid star
   };
 
-  // Generate BRUTALLY realistic telescope-quality data with HARSH reality
+  // Generate a difficult telescope-quality simulation
   const generateTimeFluxData = (brightness, colorBalance, stability) => {
     const dataPoints = [];
     const baseFlux = 1.0;
@@ -263,9 +263,9 @@ const CameraExoplanetDetector = () => {
     const idealStellarMass = 0.5 + (colorBalance / 255) * 1.5; // 0.5-2.0 solar masses
     const idealOrbitalDistance = 0.1 + (stability / 100) * 2.0; // 0.1-2.1 AU
     
-    console.log(`🌍 IDEAL BODY: Planet ${idealPlanetRadius.toFixed(2)}R⊕, Star ${idealStellarMass.toFixed(2)}M☉, Orbit ${idealOrbitalDistance.toFixed(2)}AU`);
+    console.log(`Simulated body: planet ${idealPlanetRadius.toFixed(2)}R⊕, star ${idealStellarMass.toFixed(2)}M☉, orbit ${idealOrbitalDistance.toFixed(2)}AU`);
     
-    // BRUTAL REALITY: Most candidates are FALSE POSITIVES!
+    // Model most simulated candidates as false positives
     const randomScenario = Math.random();
     let scenarioType = "";
     
@@ -286,7 +286,7 @@ const CameraExoplanetDetector = () => {
       scenarioType = "PURE_NOISE";
     }
     
-    console.log(`🔬 BRUTAL SIMULATION: ${scenarioType} scenario for ideal body`);
+    console.log(`Simulation scenario: ${scenarioType}`);
     
     // Generate realistic parameters based on IDEAL BODY + SCENARIO
     let period, transitDepth, transitDuration, noiseLevel;
@@ -356,8 +356,8 @@ const CameraExoplanetDetector = () => {
     const totalTime = Math.max(60, period * 6); // At least 6 periods
     const numPoints = 1400; // Lots of data
     
-    console.log(`   📊 Period: ${period.toFixed(2)}d, Depth: ${(transitDepth*100).toFixed(3)}%, Noise: ${(noiseLevel*100).toFixed(3)}%`);
-    console.log(`   🎯 Based on: R=${idealPlanetRadius.toFixed(2)}R⊕, M*=${idealStellarMass.toFixed(2)}M☉, a=${idealOrbitalDistance.toFixed(2)}AU`);
+    console.log(`Period: ${period.toFixed(2)}d, depth: ${(transitDepth*100).toFixed(3)}%, noise: ${(noiseLevel*100).toFixed(3)}%`);
+    console.log(`Parameters: R=${idealPlanetRadius.toFixed(2)}R⊕, M*=${idealStellarMass.toFixed(2)}M☉, a=${idealOrbitalDistance.toFixed(2)}AU`);
     
     for (let i = 0; i < numPoints; i++) {
       const time = (i / numPoints) * totalTime;
@@ -436,12 +436,12 @@ const CameraExoplanetDetector = () => {
     try {
       // Check if analysis is still active
       if (!isAnalyzing && !shouldBeAnalyzing.current) {
-        console.log('🛑 ANALYSIS STOPPED - Skipping backend submission');
+        console.log('Analysis stopped; skipping backend submission');
         return;
       }
       
       setPipelineStep(5);
-      console.log(`📤 SENDING ${candidates.length} CANDIDATES TO BACKEND...`);
+      console.log(`Sending ${candidates.length} candidates to backend`);
       
       // Create new abort controller for this batch
       abortController.current = new AbortController();
@@ -451,7 +451,7 @@ const CameraExoplanetDetector = () => {
         
         // Check if analysis is still active before each candidate
         if (!isAnalyzing && !shouldBeAnalyzing.current) {
-          console.log('🛑 ANALYSIS STOPPED - Aborting backend submission');
+          console.log('Analysis stopped; aborting backend submission');
           return;
         }
         
@@ -466,17 +466,17 @@ const CameraExoplanetDetector = () => {
         const csvFile = new File([csvBlob], `candidate_${candidate.id}.csv`, { type: 'text/csv' });
         
         // Send to backend using the SAME method as homepage!
-        console.log(`🔥 SUMMONING THE COUNCIL OF LORDS FOR CANDIDATE ${i+1}/${candidates.length}! 🔥`);
+        console.log(`Analyzing candidate ${i + 1}/${candidates.length}`);
         const result = await councilAPI.analyzeFile(csvFile, {
           signal: abortController.current.signal
         });
         
-        console.log('🏛️ FULL COUNCIL RESPONSE:', result);
-        console.log('📊 Verdict:', result.verdict);
-        console.log('📈 Confidence:', result.confidence);
-        console.log('🗳️ Individual Votes:', result.individual_votes);
-        console.log('🚩 Red Flags:', result.red_flags);
-        console.log('📝 Pipeline Logs:', result.pipeline_logs);
+        console.log('Ensemble response:', result);
+        console.log('Verdict:', result.verdict);
+        console.log('Confidence:', result.confidence);
+        console.log('Individual votes:', result.individual_votes);
+        console.log('Red flags:', result.red_flags);
+        console.log('Pipeline logs:', result.pipeline_logs);
         
         // Update stats
         setSessionStats(prev => ({
@@ -505,9 +505,9 @@ const CameraExoplanetDetector = () => {
             ...prev,
             exoplanetsDetected: prev.exoplanetsDetected + 1
           }));
-          console.log('🪐 EXOPLANET DETECTED!', backendResult);
+          console.log('Exoplanet candidate detected:', backendResult);
         } else {
-          console.log('🤖 Backend analysis complete:', result.verdict, result.message);
+          console.log('Backend analysis complete:', result.verdict, result.message);
         }
       }
       
@@ -515,11 +515,11 @@ const CameraExoplanetDetector = () => {
     } catch (error) {
       // Handle abort gracefully
       if (error.name === 'AbortError') {
-        console.log('🛑 Backend request aborted');
+        console.log('Backend request aborted');
         return;
       }
       
-      console.error('❌ Backend connection failed:', error);
+      console.error('Backend connection failed:', error);
       
       // Add error result to display (only if not stopped)
       if (!isStopping && isAnalyzing) {
@@ -542,7 +542,7 @@ const CameraExoplanetDetector = () => {
 
   // Stop analysis
   const stopAnalysis = () => {
-    console.log('🛑 STOPPING ANALYSIS...');
+    console.log('Stopping analysis');
     shouldBeAnalyzing.current = false;
     setIsAnalyzing(false);
     setPipelineStep(2);
@@ -559,7 +559,7 @@ const CameraExoplanetDetector = () => {
       abortController.current = null;
     }
     
-    console.log('🛑 ANALYSIS STOPPED');
+    console.log('Analysis stopped');
   };
 
   // Pipeline steps for display

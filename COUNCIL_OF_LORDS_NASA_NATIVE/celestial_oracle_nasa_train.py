@@ -53,7 +53,7 @@ def celestial_oracle_nasa_loss(y_true, y_pred):
     confidence = tf.abs(y_pred - 0.5) * 2.0
     uncertainty_penalty = tf.reduce_mean(tf.square(1 - confidence)) * 0.3
     
-    # REWARD high confidence correct predictions
+    # Reward high-confidence correct predictions
     correct_confidence_bonus = tf.where(
         tf.equal(tf.round(y_pred), y_true),
         -confidence * 0.15,  # Bonus for confident correct predictions

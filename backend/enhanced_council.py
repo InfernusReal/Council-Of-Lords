@@ -75,7 +75,7 @@ def enhanced_council_predict(models, scalers, nasa_params_list, v_shape_detected
             predictions[name] = 0.5
             confidences[name] = 0.0
     
-    # REVOLUTIONARY SIGNAL-BASED ANALYSIS with ADVANCED DETECTION
+    # Signal-based analysis
     signal_flags = []
     advanced_score = 0.0
     
@@ -117,7 +117,7 @@ def enhanced_council_predict(models, scalers, nasa_params_list, v_shape_detected
         elif gas_giant_confidence > 0.6:
             advanced_score -= 0.2  # Medium confidence gets smaller bonus
     
-    # Signal-based red flags (NOW WITH GAS GIANT AWARENESS!)
+    # Signal-based flags, including gas-giant handling
     
     # 1. Extreme period check (contact binaries or impossible orbits)
     if koi_period < 0.3:  # Contact binary territory
@@ -133,7 +133,7 @@ def enhanced_council_predict(models, scalers, nasa_params_list, v_shape_detected
         signal_flags.append(f"Extreme long period: {koi_period:.3f}d")
         advanced_score += 0.3
     
-    # 2. Physically impossible planet sizes (GAS GIANT AWARE!)
+    # 2. Physically implausible planet sizes, with gas-giant handling
     if koi_prad > 80.0:  # Larger than any known planet (increased for ultra-hot Jupiters)
         signal_flags.append(f"IMPOSSIBLE planet size: {koi_prad:.1f} Earth radii")
         advanced_score += 1.2

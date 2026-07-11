@@ -172,7 +172,7 @@ class SupremeTelescopeConverter:
         # PHASE 0: STELLAR PARAMETER ACQUISITION (NEW!)
         stellar_params = self.get_stellar_parameters(target_id, ra, dec, target_name)
         
-        # 🌟 STORE STELLAR PARAMETERS FOR FRONTEND ACCESS! 🌟
+        # Store stellar parameters for the frontend response
         self.last_stellar_params = stellar_params  # Store for backend access!
         
         # PHASE 1: DATA CLEANING & QUALITY ASSESSMENT

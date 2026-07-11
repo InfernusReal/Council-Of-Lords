@@ -93,7 +93,7 @@ def enhanced_council_predict(models, scalers, nasa_params_list, v_shape_detected
             predictions[name] = 0.5
             confidences[name] = 0.0
     
-    # REVOLUTIONARY SIGNAL-BASED ANALYSIS with ADVANCED DETECTION
+    # Signal-based analysis
     signal_flags = []
     advanced_score = 0.0
     
@@ -164,7 +164,7 @@ def enhanced_council_predict(models, scalers, nasa_params_list, v_shape_detected
             print(f"   Period reasonableness: {period_reasonable}")
             print(f"   Gas giant confidence: {gas_giant_confidence:.2f}")
     
-    # Signal-based red flags (NOW WITH GAS GIANT AWARENESS!)
+    # Signal-based flags, including gas-giant handling
     
     # 1. Extreme period check (contact binaries or impossible orbits)
     if koi_period < 0.3:  # Contact binary territory
@@ -174,7 +174,7 @@ def enhanced_council_predict(models, scalers, nasa_params_list, v_shape_detected
         signal_flags.append(f"Extreme long period: {koi_period:.3f}d")
         advanced_score += 0.3
     
-    # 2. Physically impossible planet sizes (GAS GIANT AWARE!)
+    # 2. Physically implausible planet sizes, with gas-giant handling
     if koi_prad > 40.0:  # Larger than any known planet
         signal_flags.append(f"IMPOSSIBLE planet size: {koi_prad:.1f} Earth radii")
         advanced_score += 1.2
@@ -311,7 +311,7 @@ class BrutalRealityTester:
                 if np.sum(in_transit) > 0:
                     flux[in_transit] -= depth
         
-        # 6. BRUTAL noise level
+        # 6. High noise level
         flux += np.random.normal(0, 0.0012, len(time))
         
         # 7. Major data gaps from safe mode
@@ -329,7 +329,7 @@ class BrutalRealityTester:
         time = np.arange(0, 55, 2/60/24)  # 2 TESS sectors of hell
         flux = np.ones(len(time))
         
-        # TESS SYSTEMATIC NIGHTMARE:
+        # TESS systematic scenario
         # 1. Scattered light from Earth and Moon
         orbital_period = 13.7  # TESS orbital period
         scattered_light = 0.025 * np.sin(2 * np.pi * time / orbital_period)
@@ -378,7 +378,7 @@ class BrutalRealityTester:
         time = np.arange(0, 8, 5/60/24)  # 8 hours of observational hell
         flux = np.ones(len(time))
         
-        # GROUND-BASED NIGHTMARE:
+        # Ground-based observing scenario
         # 1. Atmospheric turbulence (seeing variations)
         seeing_variations = 0.015 * np.random.random(len(time))
         flux += seeing_variations
@@ -708,7 +708,7 @@ class BrutalRealityTester:
         converter = SupremeTelescopeConverter()
         models, scalers = load_council_of_lords()
         
-        # THE ULTIMATE BRUTAL TEST
+        # Run the complete stress test
         print("\n⚔️ BEGINNING BRUTAL REALITY TEST...")
         print("=" * 85)
         
@@ -804,7 +804,7 @@ class BrutalRealityTester:
                 })
                 total_tests += 1
         
-        # FINAL BRUTAL RESULTS
+        # Final stress-test results
         print("\n" + "=" * 85)
         print("💀 BRUTAL REALITY TEST RESULTS")
         print("=" * 85)

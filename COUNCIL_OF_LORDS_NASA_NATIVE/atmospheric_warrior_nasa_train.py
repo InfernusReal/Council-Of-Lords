@@ -53,7 +53,7 @@ def atmospheric_warrior_nasa_loss(y_true, y_pred):
     confidence = tf.abs(y_pred - 0.5) * 2.0
     uncertainty_penalty = tf.reduce_mean(tf.square(1 - confidence)) * 0.4
     
-    # WARRIOR BONUS for decisive atmospheric detections
+    # Increase the reward for decisive atmospheric detections
     decisive_bonus = tf.where(
         tf.logical_and(tf.equal(tf.round(y_pred), y_true), confidence > 0.8),
         -confidence * 0.2,  # Higher bonus for very confident correct predictions
@@ -125,7 +125,7 @@ def create_atmospheric_warrior_nasa_architecture():
     x = Dense(20, kernel_regularizer=l2(0.0005), name='signature_detection_2')(x)
     x = LeakyReLU(alpha=0.1, name='warrior_activation_5')(x)
     
-    # WARRIOR FINAL VERDICT
+    # Final output layer
     output = Dense(1, activation='sigmoid', name='atmospheric_warrior_verdict')(x)
     
     model = Model(inputs=input_layer, outputs=output, name='ATMOSPHERIC_WARRIOR_NASA_AI')

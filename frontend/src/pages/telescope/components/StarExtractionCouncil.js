@@ -11,7 +11,7 @@ class StarExtractionCouncil {
   }
 
   async analyzeFrame(imageData, timestamp) {
-    console.log('🏛️ REAL Star Extraction starting...');
+    console.log('Starting star extraction');
     
     // ACTUAL image analysis - find bright pixels
     const { data, width, height } = imageData;
@@ -59,7 +59,7 @@ class StarExtractionCouncil {
       }
     }
     
-    console.log(`✅ REAL analysis found ${detectedStars.length} actual stars`);
+    console.log(`Analysis found ${detectedStars.length} stars`);
     return detectedStars;
   }
 
@@ -127,7 +127,7 @@ class StarExtractionCouncil {
       csv += `${timeSeconds.toFixed(6)},${entry.flux.toFixed(8)}\n`;
     });
     
-    console.log(`📊 Generated CSV for ${starId}: ${starData.length} data points`);
+    console.log(`Generated CSV for ${starId}: ${starData.length} data points`);
     return csv;
   }
 

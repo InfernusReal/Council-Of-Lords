@@ -209,7 +209,7 @@ const PlanetVisualization = ({ results }) => {
   const tempCelsius = equilibriumTemp - 273.15;
 
   // Debug: Log the actual data being used
-  console.log('🌟 REAL STELLAR DATA:', {
+  console.log('Stellar data:', {
     filename: results.filename,
     planetName: planetData.name,
     stellarTemp: planetData.temperature,

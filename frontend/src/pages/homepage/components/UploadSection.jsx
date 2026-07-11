@@ -39,16 +39,16 @@ const UploadSection = ({ onUpload, onAnalysisStart, onAnalysisComplete }) => {
     onAnalysisStart && onAnalysisStart();
 
     try {
-      console.log('🔥 SUMMONING THE COUNCIL OF LORDS! 🔥');
+      console.log('Starting ensemble analysis');
       
       const result = await councilAPI.analyzeFile(selectedFile);
       
-      console.log('🏛️ FULL COUNCIL RESPONSE:', result);
-      console.log('📊 Verdict:', result.verdict);
-      console.log('📈 Confidence:', result.confidence);
-      console.log('🗳️ Individual Votes:', result.individual_votes);
-      console.log('🚩 Red Flags:', result.red_flags);
-      console.log('📝 Pipeline Logs:', result.pipeline_logs);
+      console.log('Ensemble response:', result);
+      console.log('Verdict:', result.verdict);
+      console.log('Confidence:', result.confidence);
+      console.log('Individual votes:', result.individual_votes);
+      console.log('Red flags:', result.red_flags);
+      console.log('Pipeline logs:', result.pipeline_logs);
       
       // Transform the backend result to match frontend expectations
       const transformedResult = {
@@ -78,7 +78,7 @@ const UploadSection = ({ onUpload, onAnalysisStart, onAnalysisComplete }) => {
         message: result.message || '',
         pipelineLogs: result.pipeline_logs || [],
         
-        // 🌟 STELLAR CATALOG DATA - PASS THROUGH FROM BACKEND! 🌟
+        // Stellar catalog data from the backend
         stellar_mass: result.stellar_mass,
         stellar_radius: result.stellar_radius,
         stellar_temperature: result.stellar_temperature,
@@ -90,7 +90,7 @@ const UploadSection = ({ onUpload, onAnalysisStart, onAnalysisComplete }) => {
         koi_period: result.koi_period,
         koi_prad: result.koi_prad,
         
-        // 🚀 ADVANCED DETECTION DATA 🚀  
+        // Detection diagnostics
         advanced_detection: result.advanced_detection,
         signal_analysis: result.signal_analysis
       };
